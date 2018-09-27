@@ -64,6 +64,7 @@ def convert_onnx2coreml(path_to_src_onnx, path_to_dest_mlmodel):
 
     coreml_model = coremltools.models.MLModel(spec)
 
+    spec = coreml_model.get_spec()
     #coreml_model.save(path_to_dest_mlmodel)
     
     coremltools.utils.rename_feature(spec, '0', 'input')
