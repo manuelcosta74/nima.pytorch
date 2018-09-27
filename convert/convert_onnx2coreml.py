@@ -5,6 +5,7 @@ import coremltools
 
 from onnx_coreml import convert
 from onnx import onnx_pb
+from coremltools.models import MLModel
 
 """
 IMAGE_NET_MEAN = [0.485, 0.456, 0.406]
@@ -63,6 +64,9 @@ def convert_onnx2coreml(path_to_src_onnx, path_to_dest_mlmodel):
 
     coreml_model = coremltools.models.MLModel(spec)
 
-
-    coreml_model.save(path_to_dest_mlmodel)
-
+    #coreml_model.save(path_to_dest_mlmodel)
+    
+    coremltools.utils.rename_feature(spec, '0', 'input')
+    coremltools.utils.rename_feature(spec, '487', 'output')
+    
+    coremltools.utils.save_spec(spec, path_to_dest_mlmodel)
