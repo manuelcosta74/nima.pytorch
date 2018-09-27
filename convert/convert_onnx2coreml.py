@@ -60,14 +60,15 @@ def convert_onnx2coreml(path_to_src_onnx, path_to_dest_mlmodel):
     nn_spec.layers[1].input[0] = '0_scaled'
 
 
-    #os.chdir("/Users/Storyo/Documents/Code/python/convert_onnx2coreml/")
-
     coreml_model = coremltools.models.MLModel(spec)
 
     spec = coreml_model.get_spec()
     #coreml_model.save(path_to_dest_mlmodel)
     
+    spec.neuralNetwork.preprocessing[0].featureName = 'input'
+    
     coremltools.utils.rename_feature(spec, '0', 'input')
     coremltools.utils.rename_feature(spec, '487', 'output')
+    
     
     coremltools.utils.save_spec(spec, path_to_dest_mlmodel)
